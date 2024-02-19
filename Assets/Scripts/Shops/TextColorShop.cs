@@ -57,7 +57,7 @@ public class TextColorShop : Game
                 {
                     if (ph.pp.Gold < entry.GoldCost)
                     {
-                        twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"You don't have enough gold! Your current gold: {ph.pp.Gold}");
+                        twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"No tienes suficiente oro!: Actualmente tienes: {ph.pp.Gold}");
                         return;
                     }
 

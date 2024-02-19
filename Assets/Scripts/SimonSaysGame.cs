@@ -139,7 +139,7 @@ public class SimonSaysGame : Game
         if (targetPh == null)
         {
             Debug.Log("TargetPlayerHandler is null");
-            twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Your command failed to find a valid target username in play. The correct format is: @username");
+            twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "ERROR. Menciona a un usuario. El formato correcto es: @usuario");
             return;
         }
 

@@ -139,11 +139,11 @@ public class RoyalExecutionGame : Game
         if (_state != GameState.waiting)
             return;
 
-        if (commandKey.Contains("!left"))
+        if (commandKey.Contains("!left") || commandKey.Contains("!izquierda"))
         {
             if (!ph.IsKing())
             {
-                twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "You must hold the throne to use this command.");
+                twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Debes tener el trono para usar este comando.");
                 return;
             }
 
@@ -151,11 +151,11 @@ public class RoyalExecutionGame : Game
             RotateSpikeToSide(Side.Left);
             AudioController.inst.PlaySound(AudioController.inst.Switch2, 0.98f, 0.98f);
         }
-        else if (commandKey.Contains("!right"))
+        else if (commandKey.Contains("!right") || commandKey.Contains("!derecha"))
         {
             if (!ph.IsKing())
             {
-                twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "You must hold the throne to use this command.");
+                twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Debes tener el trono para usar este comando.");
                 return;
             }
 

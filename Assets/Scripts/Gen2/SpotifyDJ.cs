@@ -270,10 +270,10 @@ public class SpotifyDJ : MonoBehaviour
                 artistSb.Append(", ");
             }
             //MyTTS.inst.Announce($"{ph.pp.TwitchUsername} changed the song to {track.Name} by {artistSb}");
-            _twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"As ruler of the throne, you changed the song to {track.Name} by {artistSb}");
+            _twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Como eres el rey, hás cambiado la canción: {track.Name} hecho por {artistSb}");
             return;
         }
-        _twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Unable to find song. See valid options in this playlist: {AppConfig.inst.GetS("SpotifySafePlaylistURL")}");
+        _twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"No se ha podido encontrar la canción. Canciones válidas en esta lista: {AppConfig.inst.GetS("SpotifySafePlaylistURL")}");
     }
 
     private async Task PlaySongAsync(string trackUri)
