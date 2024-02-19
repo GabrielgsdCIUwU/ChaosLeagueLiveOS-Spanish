@@ -88,7 +88,7 @@ public class KingController : MonoBehaviour, TravelingIndicatorIO
         pb.Ph.pp.ThroneCaptures += 1; 
         _autoPredictions.NewKingSignal(newKingUsername, (int)_previousKingDuration);
 
-        MyTTS.inst.Announce($"Throne captured by {newKingUsername}");
+        MyTTS.inst.Announce($"Trono capturado por {newKingUsername}");
         winnerNameText.SetText(newKingUsername);
 
         winnerNameText.color = pb._usernameText.color;
@@ -168,7 +168,7 @@ public class KingController : MonoBehaviour, TravelingIndicatorIO
 
     public void UpdateGoldText()
     {
-        _kingGoldText.SetText($"{MyUtil.AbbreviateNum4Char(currentKing.Ph.pp.Gold)} Gold"); 
+        _kingGoldText.SetText($"{MyUtil.AbbreviateNum4Char(currentKing.Ph.pp.Gold)} Oro"); 
     }
 
     private void UpdateCurrExponentScale()

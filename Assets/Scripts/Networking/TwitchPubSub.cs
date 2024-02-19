@@ -106,7 +106,7 @@ public class TwitchPubSub : MonoBehaviour
 
     public IEnumerator HandleOnBitsReceived(string twitchId, string twitchUsername, string rawMsg, int bitsInMessage)
     {
-        CLDebug.Inst.ReportDonation("NEW BIT DONATION", $"{bitsInMessage} bits (${bitsInMessage/100f}) from {twitchUsername}.\nMessage: {rawMsg}"); 
+        CLDebug.Inst.ReportDonation("NUEVA DONACIÓN:", $"{bitsInMessage} bits (${bitsInMessage/100f}) de {twitchUsername}.\nMensaje: {rawMsg}"); 
 
         CoroutineResult<PlayerHandler> coResult = new CoroutineResult<PlayerHandler>();
         yield return _gm.GetPlayerHandler(twitchId, coResult);
@@ -126,7 +126,7 @@ public class TwitchPubSub : MonoBehaviour
             _lavaBitTrigger.AddBits(twitchUsername, bitsInMessage);
             yield break;
         }
-        if (rawMsg.ToLower().Contains("!water"))
+        if (rawMsg.ToLower().Contains("!agua"))
         {
             _waterBitTrigger.AddBits(twitchUsername, bitsInMessage);
             
@@ -136,7 +136,7 @@ public class TwitchPubSub : MonoBehaviour
         if(bitsInMessage >= 200)
             StartCoroutine(_rebellionController.CreateRebellion(ph, bitsInMessage, rawMsg));
         else
-            _twitchClient.PingReplyPlayer(twitchUsername, "Rebellion requires minimum of 200 bits. Each 100 bits in message increases multiplier by 1.");
+            _twitchClient.PingReplyPlayer(twitchUsername, "Rebelion como míínimo necesitas 200 bits. Cada 100 bits en un mensaje incrementa por 1.");
         
 
         _ticketHandler.BidRedemption(ph, bitsInMessage, BidType.Bits);
@@ -179,7 +179,7 @@ public class TwitchPubSub : MonoBehaviour
 
     public IEnumerator HandleOnSubscription(string twitchId, string username, int MultiMonthDuration, SubscriptionPlan subPlan)
     {
-        CLDebug.Inst.ReportDonation("NEW SUB", $"{username} subbed {MultiMonthDuration} {subPlan}");
+        CLDebug.Inst.ReportDonation("NUEVA SUB", $"{username} se ha suscrito durante {MultiMonthDuration} {subPlan}");
 
         CoroutineResult<PlayerHandler> coResult = new CoroutineResult<PlayerHandler>();
         yield return _gm.GetPlayerHandler(twitchId, coResult);
@@ -194,7 +194,7 @@ public class TwitchPubSub : MonoBehaviour
         ph.pp.LastInteraction = DateTime.Now;
         ph.pp.TwitchUsername = username;
 
-        MyTTS.inst.Announce($"{username} subed {MultiMonthDuration} month{((MultiMonthDuration > 1) ? "s" : "")} with {subPlan}. Brofist.");
+        MyTTS.inst.Announce($"{username} se ha suscrito durante {MultiMonthDuration} mes{((MultiMonthDuration > 1) ? "es" : "")} con {subPlan}. Brofist.");
 
         int bidAmount = AppConfig.inst.GetI("NewSubBonusBid") * MultiMonthDuration;
         if (subPlan == SubscriptionPlan.Tier2)
@@ -207,7 +207,7 @@ public class TwitchPubSub : MonoBehaviour
 
     public IEnumerator HandleGiftSubscription(string twitchId, string username, string recipientId, string recipientUsername, int MultiMonthDuration, SubscriptionPlan subPlan)
     {
-        CLDebug.Inst.ReportDonation("NEW GIFT SUB", $"{username} gifted {recipientUsername} {MultiMonthDuration} {subPlan}");
+        CLDebug.Inst.ReportDonation("NUEVA SUB REGALADA", $"{username} ha regalado {recipientUsername} {MultiMonthDuration} {subPlan}");
 
         CoroutineResult<PlayerHandler> coResult = new CoroutineResult<PlayerHandler>();
         yield return _gm.GetPlayerHandler(twitchId, coResult);

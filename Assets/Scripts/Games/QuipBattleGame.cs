@@ -69,7 +69,7 @@ public class QuipBattleGame : Game
 
             //Move the vote count text to position based on the ball
             _voteCountTexts[i].transform.position = new Vector2(_voteCountTexts[i].transform.position.x, targetPos.y);
-            _voteCountTexts[i].SetText("Votes: 0"); 
+            _voteCountTexts[i].SetText("Votos: 0"); 
 
             ph.GetPlayerBall().AddPriorityWaypoint(targetPos, 0.15f);
             Debug.Log($"Moving player {ph.pp.TwitchUsername} to position {targetPos}");
@@ -85,7 +85,7 @@ public class QuipBattleGame : Game
             pollChoices.Add(new Choice { Title = _gt.AlivePlayers[i].pp.TwitchUsername });
         }
 
-        _ = TwitchApi.StartPoll("Who has the funniest response?", pollChoices, _pollDurationSeconds);
+        _ = TwitchApi.StartPoll("¿Quién es más gracioso?", pollChoices, _pollDurationSeconds);
 
         StartCoroutine(RunGame(_gt)); 
     }
@@ -174,7 +174,7 @@ public class QuipBattleGame : Game
 
             for (int i = 0; i < voteList1.Count && i < _voteCountTexts.Length; i++)
             {
-                _voteCountTexts[i].SetText($"Votes: {voteList1[i].votes}");
+                _voteCountTexts[i].SetText($"Votos: {voteList1[i].votes}");
 
                 int voteChange = voteList1[i].votes;
                 if (prevVotes.Count >= voteList1.Count) //If it's the first time we read the poll, just take whatever the vote amount as the change so long as it's zero, because the prevList isn't populated yet
@@ -185,7 +185,7 @@ public class QuipBattleGame : Game
                     //int votesPointBonus = Mathf.Max(1, voteChange * (gt.TicketBonusAmount / 10));
                     
                     int votesPointBonus = Mathf.Max(1, voteChange * (int)_voteValueEffector.GetZoneMultiplyAppliedValue());
-                    TextPopupMaster.Inst.CreateTextPopup(_voteCountTexts[i].transform.position, Vector2.up, $"votes +{voteChange}", Color.cyan);
+                    TextPopupMaster.Inst.CreateTextPopup(_voteCountTexts[i].transform.position, Vector2.up, $"votos +{voteChange}", Color.cyan);
 
                     PlayerHandler ph = gt.GetAlivePlayerViaUsername(voteList1[i].username);
                     if(ph != null)

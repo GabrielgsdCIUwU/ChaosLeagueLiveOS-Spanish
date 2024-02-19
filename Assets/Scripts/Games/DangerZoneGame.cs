@@ -155,7 +155,7 @@ public class DangerZoneGame : Game, TravelingIndicatorIO
     private void StartRound(int roundNum, List<PlayerHandler> phs)
     {
         Debug.Log("Starting round with total player count: " + phs.Count);
-        _roundsRemainingText.SetText($"Round: {roundNum + 1}/{_rounds}");
+        _roundsRemainingText.SetText($"Ronda: {roundNum + 1}/{_rounds}");
 
         //Randomize the order of the alive players;
         phs = phs.OrderBy(x => Random.value).ToList();
@@ -229,7 +229,7 @@ public class DangerZoneGame : Game, TravelingIndicatorIO
 
         if (_state != GameState.collectingCommands && _state != GameState.gridDividing)
         {
-            twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "You can only pull while the tile is in 'Collecting commands' mode.");
+            twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Solo puedes atraer cuando esté en modo 'Recogiendo comandos'.");
             return;
         }
 
@@ -241,13 +241,13 @@ public class DangerZoneGame : Game, TravelingIndicatorIO
         if(targetPlayerHandler == null)
         {
             Debug.Log("TargetPlayerHandler is null"); 
-            twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Your command failed to find a valid target username in play. The correct format is: @username");
+            twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "ERROR. Para encontrar un objetivo válido en el juego. El formato correcto es: @nombreusuario");
             return;
         }
 
         if(targetPlayerHandler.pp.TwitchUsername == ph.pp.TwitchUsername)
         {
-            twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "You can't pull yourself doofus. I thought of everything... hehehe.");
+            twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "No puedes atraer a ti mismo tonto. Pensé en todo... jeje ;).");
             return;
         }
 
@@ -260,15 +260,15 @@ public class DangerZoneGame : Game, TravelingIndicatorIO
         _state = state;
 
         if (state == GameState.waiting)
-            _stateText.SetText("Waiting...");
+            _stateText.SetText("Esperando...");
         else if (state == GameState.collectingCommands)
-            _stateText.SetText("Collecting commands...");
+            _stateText.SetText("Recogiendo comandos...");
         else if(state == GameState.pulling)
-            _stateText.SetText("Pulling players...");
+            _stateText.SetText("Empujando jugadores...");
         else if(state == GameState.gridDividing)
-            _stateText.SetText("Grid dividing...");
+            _stateText.SetText("Dividiendo cuadrículas...");
         else if(state == GameState.spinning)
-            _stateText.SetText("Spinning...");
+            _stateText.SetText("Girando...");
 
     }
 
@@ -280,7 +280,7 @@ public class DangerZoneGame : Game, TravelingIndicatorIO
         _activeArrows.Clear();
 
         IsGameStarted = false;
-        _roundsRemainingText.SetText($"Round: 1/{_rounds}");
+        _roundsRemainingText.SetText($"Ronda: 1/{_rounds}");
         SetState(GameState.waiting);
     }
 

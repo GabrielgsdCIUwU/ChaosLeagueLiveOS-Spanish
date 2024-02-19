@@ -163,9 +163,9 @@ public class SuperCapsule : MonoBehaviour
         _mainBody.SetPropertyBlock(_materialPropertyBlock);
 
         if(_tilesRemaining == 1)
-            _labelText.SetText($"{_tilesRemaining} tile remains");
+            _labelText.SetText($"Queda {_tilesRemaining} partida");
         else
-            _labelText.SetText($"{_tilesRemaining} tiles remain");
+            _labelText.SetText($"Queda {_tilesRemaining} partidas");
 
         _labelText.color = Color.white;
     }

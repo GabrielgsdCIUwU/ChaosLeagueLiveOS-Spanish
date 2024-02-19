@@ -121,7 +121,7 @@ public class InvitePromo : MonoBehaviour
         _popupPanel.SetActive(true);
         _invitedInviterIndicator.gameObject.SetActive(false);
 
-        MyTTS.inst.Announce($"{inviter.pp.TwitchUsername} invited {invited.pp.TwitchUsername} to the stream!"); 
+        MyTTS.inst.Announce($"{inviter.pp.TwitchUsername} invitó a {invited.pp.TwitchUsername} al stream!"); 
 
         float timer = 0; 
         while(timer < _scaleAnimationDuration)

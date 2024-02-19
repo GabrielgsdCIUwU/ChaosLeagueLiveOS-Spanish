@@ -48,7 +48,7 @@ public class ChickenOutGame : Game
         if (_currRiskLevel > _maxRiskLevel)
             _currRiskLevel = _maxRiskLevel;
 
-        _riskLevelText.SetText($"Risk Level: {_currRiskLevel + 1}/{_maxRiskLevel + 1}");
+        _riskLevelText.SetText($"Nivel de PELIGRO: {_currRiskLevel + 1}/{_maxRiskLevel + 1}");
 
         float t = (_currRiskLevel) / (float)_maxRiskLevel;
 

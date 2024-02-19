@@ -334,7 +334,7 @@ public class PlayerBall : MonoBehaviour
     public void UpdatePointsText()
     {
         if(Ph.IsKing())
-            _currPointsText.SetText(MyUtil.AbbreviateNum4Char(Ph.pp.SessionScore) + " Points");
+            _currPointsText.SetText(MyUtil.AbbreviateNum4Char(Ph.pp.SessionScore) + " Puntos");
         else
             _currPointsText.SetText(MyUtil.AbbreviateNum4Char(Ph.pp.SessionScore));
     }

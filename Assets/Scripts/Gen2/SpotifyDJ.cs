@@ -206,7 +206,7 @@ public class SpotifyDJ : MonoBehaviour
         {
             _safeSongIds = await GetTrackIsrcsFromPlaylistAsync(AppConfig.inst.GetS("SpotifySafePlaylistURL"));
 
-            _spotifyConnectionStatus.SetText($"Finished Initializing Spotify Client. Safe song Ids found: {_safeSongIds.Count}");
+            _spotifyConnectionStatus.SetText($"Terminó el cliente de Spotify. IDs de canciónes encontradas: {_safeSongIds.Count}");
         }
     }
 
@@ -233,7 +233,7 @@ public class SpotifyDJ : MonoBehaviour
             var track = item.Track as FullTrack;
 
             count++;
-            _spotifyConnectionStatus.SetText($"{count} item name: {track.Name} id: {track.Id}");
+            _spotifyConnectionStatus.SetText($"{count} nombre del objeto: {track.Name} id: {track.Id}");
 
             isrcSet.Add(track.ExternalIds["isrc"]);
         }
@@ -244,7 +244,7 @@ public class SpotifyDJ : MonoBehaviour
     {
         if (_spotifyClient == null)
         {
-            _twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Admin has not connected spotify client.");
+            _twitchClient.ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Admin no ha conectado su spotify.");
             return;
         }
         //Debug.Log("attempting to search and play");

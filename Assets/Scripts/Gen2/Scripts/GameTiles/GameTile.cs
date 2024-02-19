@@ -490,7 +490,7 @@ public class GameTile : MonoBehaviour
 
     private void UpdateTicketBonusText()
     {
-        _ticketBonusAmountText.SetText("Win Prize: " + MyUtil.AbbreviateNum4Char(TicketBonusAmount)); 
+        _ticketBonusAmountText.SetText("Primer Premio: " + MyUtil.AbbreviateNum4Char(TicketBonusAmount)); 
     }
 
     public Vector3 GetTicketBonusAmountPos()

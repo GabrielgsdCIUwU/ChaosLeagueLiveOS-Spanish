@@ -64,7 +64,7 @@ public class TwitchClient : MonoBehaviour
     private void OnJoinedChannel(object sender, OnJoinedChannelArgs e)
     {
         Debug.Log($"The bot {e.BotUsername} just joined the channel: {e.Channel}");
-        _client.SendMessage(e.Channel, "[BOT] Chaos League bot connected to the channel! PogChamp");
+        _client.SendMessage(e.Channel, "[BOT] Chaos League bot conectado al canal! PogChamp");
     }
 
 
@@ -172,7 +172,7 @@ public class TwitchClient : MonoBehaviour
 
         if (isFirstMessage && AppConfig.inst.GetB("EnableFirstMessageBonus"))
         {
-            MyTTS.inst.Announce($"New player! Everyone welcome {twitchUsername} to the Chaos League.");
+            MyTTS.inst.Announce($"Nuevo jugador! Dar la bienvenida a {twitchUsername} a Chaos League.");
             _bidHandler.BidRedemption(ph, AppConfig.inst.GetI("FirstMessageBonusBid"), BidType.NewPlayerBonus); 
         }
 
@@ -214,9 +214,9 @@ public class TwitchClient : MonoBehaviour
     {
         string commandKey = msg.ToLower();
 
-        if(commandKey.StartsWith("!commands") || commandKey.StartsWith("!help"))
+        if(commandKey.StartsWith("!commands") || commandKey.StartsWith("!help") || commandKey.StartsWith("!comandos"))
         {
-            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"More info and a list of all commands are located below on my stream page panels.");
+            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Toda la lista de comandos y más información está en los paneles del Stream.");
             return;
         }
 
@@ -232,38 +232,38 @@ public class TwitchClient : MonoBehaviour
         }
         else if (commandKey.StartsWith("!discord"))
         {
-            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Join the discord to chat with other players and share your thoughts on the game: https://discord.gg/tCjGjF68ds");
+            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Unete al discord con otros jugadores y comparté lo que piensas en: https://discord.gg/tCjGjF68ds");
             return;
         }
 
         else if (commandKey.StartsWith("!invite") || commandKey.StartsWith("!recruit") || commandKey.StartsWith("!pyramidscheme") || commandKey.StartsWith("!invitelink") || commandKey.StartsWith("!getinvitelink") || commandKey.StartsWith("!getreferrallink"))
         {           
             string url = $"{Secrets.CHAOS_LEAGUE_DOMAIN}/@{ph.pp.TwitchUsername}";
-            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Share to start your pyramid scheme. Every player that joins the stream with your invite link earns you 25% of the gold they earn (yes it compounds)! \n{url}");
+            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Comparte para empezar una pirámide. Cada jugador que se una al stream con tu link de invitación, tu ganas el 25% de lo que él gane! \n{url}");
             return;
         }
-        else if (commandKey.StartsWith("!coinflip") || commandKey.StartsWith("!flipcoin"))
+        else if (commandKey.StartsWith("!coinflip") || commandKey.StartsWith("!flipcoin") || commandKey.StartsWith("!moneda"))
         {
-            string coinMsg = (UnityEngine.Random.Range(0f, 1f) < 0.5f) ? "The RNG Gods declare... HEADS" : "The RNG Gods declare... TAILS";
+            string coinMsg = (UnityEngine.Random.Range(0f, 1f) < 0.5f) ? "Los dioses del RNG declaran... CARA" : "Los dioses del RNG declaran... CRUZ/SELLO";
             ReplyToPlayer(messageId, ph.pp.TwitchUsername, coinMsg);
             return;
         }
 
-        else if (commandKey.StartsWith("!attack"))
+        else if (commandKey.StartsWith("!attack") || commandKey.StartsWith("!atacar"))
         {
             if (ph.pb != null)
             {
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "You can't attack while your ball is already spawned");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "No puedes atacar mientras tu bola ya ha sido Spawneada");
                 return;
             }
             if (ph.GetState() == PlayerHandlerState.BiddingQ)
             {
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "You can't attack while bidding for a tile");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "No puedes atacar mientras apuestas para jugar.");
                 return;
             }
             if (ph.GetState() == PlayerHandlerState.Gameplay)
             {
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "You can't attack while participating in a tile.");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "No puedes atacar mientras estes dentro de una partida.");
                 return;
             }
 
@@ -273,33 +273,33 @@ public class TwitchClient : MonoBehaviour
             _attackPipe.ReceivePlayer(pb); 
         }
 
-        else if (commandKey.StartsWith("!defend"))
+        else if (commandKey.StartsWith("!defend") || commandKey.StartsWith("!defender") || commandKey.StartsWith("!defensa"))
         {
 
             //Parse the points from the command
             string[] parts = msg.Split(' ');
             if (parts.Length < 2)
             {
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Failed to parse defend points amount. Correct format is: !defend [amount]");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"ERROR. Para defender el formato correcto es: !defend [cantidad]");
                 return;
             }
 
             long pointsToDefend;
             if (!long.TryParse(parts[1], out pointsToDefend))
             {
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Failed to parse defend points amount. Correct format is: !defend [amount]");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"ERROR. Para defender el formato correcto es: !defend [cantidad]");
                 return;
             }
 
             if (pointsToDefend <= 0)
             {
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Defend amount must be at least 1 point.");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Para defender al menos necesitas poner 1 punto.");
                 return;
             }
 
             if (ph.pp.SessionScore <= 0)
             {
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"You don't have any points to defend with.");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"No tienes puntos para defender.");
                 return;
             }
 
@@ -317,21 +317,21 @@ public class TwitchClient : MonoBehaviour
         {
             if (!ph.IsKing())
             {
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "You must hold the throne to change the toll.");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Debes de tener el trono para poder cambiar el precio de cada partida.");
                 return;
             }
 
             string[] parts = msg.Split(' ');
             if (parts.Length < 2)
             {
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Failed to parse number. Correct format is: !toll [amount]");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "ERROR. El formato correcto es: !toll [cantidad]");
                 return;
             }
 
             int desiredTollRate;
             if (!int.TryParse(parts[1], out desiredTollRate))
             {
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Failed to parse number. Correct format is: !toll [amount]");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "ERROR. El formato correcto es: !toll [cantidad]");
                 return;
             }
 
@@ -345,17 +345,17 @@ public class TwitchClient : MonoBehaviour
             StartCoroutine(ProcessGivePointsCommand(messageId, ph, msg));
         }*/
 
-        else if (commandKey.StartsWith("!givegold"))
+        else if (commandKey.StartsWith("!givegold") || commandKey.StartsWith("!daroro"))
         {
             StartCoroutine(ProcessGiveGoldCommand(messageId, ph, msg)); 
         }
 
-        else if (commandKey.StartsWith("!tomato"))
+        else if (commandKey.StartsWith("!tomato") || commandKey.StartsWith("!tomate"))
         {
             StartCoroutine(ProcessThrowTomato(messageId, ph, msg));
         }
 
-        else if (commandKey.StartsWith("!stats") || commandKey.StartsWith("!mystats") || commandKey.StartsWith("!points"))
+        else if (commandKey.StartsWith("!stats") || commandKey.StartsWith("!mystats") || commandKey.StartsWith("!points") || commandKey.StartsWith("!puntos"))
         {
             StartCoroutine(ProcessStatsCommand(messageId, ph, msg));
         }
@@ -369,14 +369,14 @@ public class TwitchClient : MonoBehaviour
         {
             if (!ph.IsKing())
             {
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "You must hold the throne to use !song");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Debes tener el trono para usar !song");
                 return;
             }
             string[] split = commandKey.Split("!song");
             if (split.Length < 2)
             {
                 Debug.Log($"!song command failed. split.length: {split.Length}");
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Failed to parse song name from command. ");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Error al pasar el nombre de la canción al comando.");
                 return;
             }
 
@@ -385,7 +385,7 @@ public class TwitchClient : MonoBehaviour
 
         else if (commandKey.StartsWith("!playlist"))
         {
-            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Music Options: {AppConfig.inst.GetS("SpotifySafePlaylistURL")}"); 
+            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Opciones de música: {AppConfig.inst.GetS("SpotifySafePlaylistURL")}"); 
         }
 
         else if (ph.IsKing() && (commandKey.StartsWith("!skipsong") || commandKey.StartsWith("!skip song") || commandKey.StartsWith("!nextsong") || commandKey.StartsWith("!next song")))
@@ -397,17 +397,17 @@ public class TwitchClient : MonoBehaviour
         {
             if(bits <= 0)
             {
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "You must include cheer bits in your message to load the lava bucket. Ex: '!lava [bit cheer]'");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Debes incluir bits en tu mensaje para rellenar el cubo de lava. Ej.: '!lava [bits]'");
                 return;
             }
             //Handled in pub sub
         }
         
-        else if (commandKey.StartsWith("!water"))
+        else if (commandKey.StartsWith("!agua"))
         {
             if (bits <= 0)
             {
-                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "You must include cheer bits in your message to load the water bucket. Ex: '!water [bit cheer]'");
+                ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Debes incluir bits en tu mensaje para rellenar el cubo de agua. Ej.: '!agua [bits]'");
                 return;
             }
             //Handled in pub sub
@@ -420,14 +420,14 @@ public class TwitchClient : MonoBehaviour
         //Get a user from the message
         if (!MyUtil.GetUsernameFromString(msg, out string targetUsername))
         {
-            ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Failed to find target username.");
+            ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Fallo al encontrar usuario.");
             yield break;
         }
 
         long bitsAmount;
         if (!MyUtil.GetFirstLongFromString(msg, out bitsAmount))
         {
-            ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Failed to parse bits amount.");
+            ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Fallo al pasar la cantidad de bits.");
             yield break;
         }
 
@@ -441,7 +441,7 @@ public class TwitchClient : MonoBehaviour
 
         if (targetPlayer == null)
         {
-            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Failed to find player with username: {targetUsername}");
+            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Fallo al encontrar al usuario: {targetUsername}");
             yield break;
         }
 
@@ -451,7 +451,7 @@ public class TwitchClient : MonoBehaviour
     }
     private IEnumerator ProcessGivePointsCommand(string messageId, PlayerHandler ph, string msg)
     {
-        ReplyToPlayer(messageId, ph.pp.TwitchUsername, "This command has been disabled to combat alt account abuse.");
+        ReplyToPlayer(messageId, ph.pp.TwitchUsername, " Este comando se ha deshabilitado por el abuso de multicuentas.");
         yield break;
 
 /*        if (!MyUtil.GetUsernameFromString(msg, out string targetUsername))
@@ -510,7 +510,7 @@ public class TwitchClient : MonoBehaviour
     }
     private IEnumerator ProcessGiveGoldCommand(string messageId, PlayerHandler ph, string msg)
     {
-        ReplyToPlayer(messageId, ph.pp.TwitchUsername, "This command has been disabled (temporarily?) to combat alt account abuse.");
+        ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Este comando ha sido (temporalmente?) deshabilitado para evitar multicuentas.");
         yield break;
         /*
         if (!MyUtil.GetUsernameFromString(msg, out string targetUsername))
@@ -570,14 +570,14 @@ public class TwitchClient : MonoBehaviour
     {
         if (!MyUtil.GetUsernameFromString(msg, out string targetUsername))
         {
-            ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Failed to find target username. Correct format is: !tomato [amount] @username");
+            ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Fallo al encontrar usuario. El formato correcto es: !tomato [cantidad] @usuario");
             yield break;
         }
 
         long desiredTomatoAmount;
         if (!MyUtil.GetFirstLongFromString(msg, out desiredTomatoAmount))
         {
-            ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Failed to parse point amount. Correct format is: !tomato [amount] @username");
+            ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Fallo con la cantidad de puntos. El formato correcto es: !tomato [cantidad] @usuario");
             yield break;
         }
 
@@ -586,7 +586,7 @@ public class TwitchClient : MonoBehaviour
 
         if (ph.pp.SessionScore <= 0)
         {
-            ReplyToPlayer(messageId, ph.pp.TwitchUsername, "You have no points to spend on a tomato.");
+            ReplyToPlayer(messageId, ph.pp.TwitchUsername, "No tienes puntos para lanzar un tomate.");
             yield break;
         }
 
@@ -597,13 +597,13 @@ public class TwitchClient : MonoBehaviour
 
         if (targetPlayer == null)
         {
-            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Failed to find player with username: {targetUsername}");
+            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Fallo en encontrar el usuario: {targetUsername}");
             yield break;
         }
 
         if(targetPlayer.pb == null)
         {
-            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"Can't throw tomatos at a player who isn't spawned in.");
+            ReplyToPlayer(messageId, ph.pp.TwitchUsername, $"No puedes lanzar tomates a un jugador que no spawneó.");
             yield break;
         }
 
@@ -626,12 +626,12 @@ public class TwitchClient : MonoBehaviour
 
         if (phToLookup == null)
         {
-            ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Failed to find player in database. Correct command format is: !stats @username");
+            ReplyToPlayer(messageId, ph.pp.TwitchUsername, "Fallo al encontrar el usuario en la base de datos. El formato correcto es: !stats @username");
             yield break;
         }
 
         PlayerProfile pp = phToLookup.pp; 
-        string statString = $"(@{phToLookup.pp.TwitchUsername}) [Gold: {pp.Gold:N0}] [Points: {pp.SessionScore:N0}] [Throne Captures: {pp.ThroneCaptures}] [Total Throne Time: {MyUtil.FormatDurationDHMS(pp.TimeOnThrone)}] [Players invited: {pp.GetInviteIds().Length}] [Tickets Spent: {pp.TotalTicketsSpent:N0}]";
+        string statString = $"(@{phToLookup.pp.TwitchUsername}) [Oro: {pp.Gold:N0}] [Puntos: {pp.SessionScore:N0}] [Tronos capturados: {pp.ThroneCaptures}] [Total de tiempo en el trono: {MyUtil.FormatDurationDHMS(pp.TimeOnThrone)}] [Jugadores invitados: {pp.GetInviteIds().Length}] [Tickets Gastados: {pp.TotalTicketsSpent:N0}]";
 
         ReplyToPlayer(messageId, ph.pp.TwitchUsername, statString);
 

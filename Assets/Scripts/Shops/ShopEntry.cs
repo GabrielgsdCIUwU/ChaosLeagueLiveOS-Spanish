@@ -14,7 +14,7 @@ public abstract class ShopEntry : PlayerReceiveable
     
     public void InitEntryBase(int goldCost, List<string> buyCommandText)
     {
-        _goldCostText.SetText($"Cost:\n{MyUtil.AbbreviateNum4Char(goldCost)} Gold");
+        _goldCostText.SetText($"Cuesta:\n{MyUtil.AbbreviateNum4Char(goldCost)} Oro");
         _buyCommandText.SetText(buyCommandText[0]);
         GoldCost = goldCost; 
     }

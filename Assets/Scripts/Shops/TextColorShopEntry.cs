@@ -18,7 +18,7 @@ public class TextColorShopEntry : ShopEntry
     {
 
 
-        _bubbleText.SetText("Text Color!");
+        _bubbleText.SetText("Color del Texto!");
         Color color;
         int randomPrice; 
         if(tier == 1)
